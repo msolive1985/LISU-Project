@@ -69,8 +69,8 @@ def LISUWD():
             packet = "addrotation " + str(roll) + " " + str(pitch) + " " + str(yaw) + " " + str(10.0)
             #packet = "addrotation " + str(roll) + " " + str(pitch) + " 0.0 " + str(10.0)
             #packet = "addrotation 0.0 " + str(pitch) + " 0.0 10"
-            #sock.sendto(packet, (UDP_IP, UDP_PORT))  
-            print packet
+            sock.sendto(packet, (UDP_IP, UDP_PORT))  
+            #print packet
             #message = [packet]
             #buf = struct.pack('>' + 's' * len(message), *message)
             #sock.sendto(buf, (UDP_IP, UDP_PORT))  
