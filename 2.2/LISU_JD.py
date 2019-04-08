@@ -52,9 +52,9 @@ def LISUJD():
 		if(yaw < 0.25 and pitch > -0.25): yaw = 0.0    
     
 		if(roll!=0.0 or pitch != 0.0 or yaw != 0.0):
-			packet = "bricktranslate " + str(round(roll,2)) + " " + str(round(pitch,2)) + " " + str(round(yaw,4))
-			#print packet
-			sock.sendto(packet, (UDP_IP, UDP_PORT))  
+			packet = "bricks_translate " + str(round(roll,2)) + " " + str(round(pitch,2)) + " " + str(round(yaw,2)) + " 1 "
+                        sock.sendto(packet, (UDP_IP, UDP_PORT))
+                        print packet
             
 		# Make this loop work at update_rate
 		while elapsed < update_rate:

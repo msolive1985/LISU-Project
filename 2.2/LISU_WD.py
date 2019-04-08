@@ -52,30 +52,25 @@ def LISUWD():
         pygame.event.pump()
         roll     = mapping(wingControl.get_axis(0),-1.0,1.0,-1.0,1.0)
         pitch    = mapping(wingControl.get_axis(1),1.0,-1.0,-1.0,1.0)
-        yaw      = mapping(wingControl.get_axis(3),1.0,-1.0,-1.0,1.0)
+        yaw      = mapping(wingControl.get_axis(3),1.0,-1.0,-1.0,1.0)		
         #throttle = mapping(joystick.get_axis(3),1.0,-1.0,-1.0,1.0)
         #mode     = joystick.get_button(24)
 
         # Autocalibrate values
-        #roll = autocalibrateValues(roll, sigmaWing)
-        #pitch = autocalibrateValues(pitch, sigmaWing)
-        #yaw = autocalibrateValues(yaw, sigmaWing)
+        roll = autocalibrateValues(roll, sigmaWing)
+        pitch = autocalibrateValues(pitch, sigmaWing)
+        yaw = autocalibrateValues(yaw, sigmaWing)
+
         #For the queue
         if(roll < 0.25 and roll > -0.25): roll = 0.0
         if(pitch < 0.25 and pitch > -0.25): pitch = 0.0
         if(yaw < 0.25 and pitch > -0.25): yaw = 0.0
                 
         if(roll!=0.0 or pitch != 0.0 or yaw != 0.0):
-            packet = "addrotation " + str(roll) + " " + str(pitch) + " " + str(yaw) + " " + str(10.0)
-            #packet = "addrotation " + str(roll) + " " + str(pitch) + " 0.0 " + str(10.0)
-            #packet = "addrotation 0.0 " + str(pitch) + " 0.0 10"
-            sock.sendto(packet, (UDP_IP, UDP_PORT))  
-            #print packet
-            #message = [packet]
-            #buf = struct.pack('>' + 's' * len(message), *message)
-            #sock.sendto(buf, (UDP_IP, UDP_PORT))  
-            #print message
-
+            packet = "addrotation " + str(round(roll,2)) + " " + str(round(pitch,2)) + " " + str(round(yaw,2)) + " " + str(10.0)
+            sock.sendto(packet, (UDP_IP, UDP_PORT))
+	    print packet
+			
         # Make this loop work at update_rate
         while elapsed < update_rate:
             elapsed = time.time() - current
