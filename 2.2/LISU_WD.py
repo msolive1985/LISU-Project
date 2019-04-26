@@ -22,10 +22,10 @@ def autocalibrateValues(value, sigma):
     return rValue
 
 def LISUWD(joyIndex):
-    logging.basicConfig(filename=("LISUWD.txt"), level=logging.DEBUG, format='%(asctime)s: %(message)s')
+    logging.basicConfig(filename=("LISUWD.log"), level=logging.DEBUG, format='%(asctime)s, %(message)s')
     UDP_IP = "127.0.0.1"
     UDP_PORT = 7755
-    update_rate = 0.095        
+    update_rate = 0.75        
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     #joyIndex = 2
     sigmaWing = 0.5    
@@ -63,7 +63,7 @@ def LISUWD(joyIndex):
         if(roll!=0.0 or pitch != 0.0 or yaw != 0.0):
             packet = "addrotation " + str(round(roll,2)) + " " + str(round(pitch,2)) + " " + str(round(yaw,2)) + " " + str(10.0)
             sock.sendto(packet, (UDP_IP, UDP_PORT))
-	    logging.info(packet)
+	    logging.info("addrotation, " + str(round(roll,2)) + ", " + str(round(pitch,2)) + ", " + str(round(yaw,2)) + ", " + str(10.0))
 			
         # Make this loop work at update_rate
         while elapsed < update_rate:

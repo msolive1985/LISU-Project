@@ -13,10 +13,10 @@ import pygame, random, sys, logging
 from modules.utils import *
 
 def LISUJD(joyIndex):
-        logging.basicConfig(filename=("LISUJD.txt"), level=logging.DEBUG, format='%(asctime)s: %(message)s')
+        logging.basicConfig(filename=("LISUJD.log"), level=logging.DEBUG, format='%(asctime)s, %(message)s')
         UDP_IP = "127.0.0.1"
 	UDP_PORT = 7775
-	update_rate = 0.0595	
+	update_rate = 0.5	
 	sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 	#joyIndex = 0
 	try:
@@ -42,9 +42,9 @@ def LISUJD(joyIndex):
 		if(yaw < 0.25 and pitch > -0.25): yaw = 0.0    
     
 		if(roll!=0.0 or pitch != 0.0 or yaw != 0.0):
-			packet = "bricks_translate " + str(round(roll,2)) + " " + str(round(pitch,2)) + " " + str(round(yaw,2)) + " 1 "
+			packet = "brickstranslate " + str(round(roll,2)) + " " + str(round(pitch,2)) + " " + str(round(yaw,2))
                         sock.sendto(packet, (UDP_IP, UDP_PORT))
-                        logging.info(packet)
+                        logging.info("brickstranslate " + str(round(roll,2)) + ", " + str(round(pitch,2)) + ", " + str(round(yaw,2)))
             
 		# Make this loop work at update_rate
 		while elapsed < update_rate:

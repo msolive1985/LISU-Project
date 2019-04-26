@@ -9,24 +9,17 @@ __status__ = "Development"
 
 import spacenavigator, socket, struct, time
 import pygame, random, sys, logging
-"""LISU_SP.py: Spacenavigator daemon to send the information via UDP."""
-
-__author__ = "Mario Sandoval"
-__copyright__ = "Copyright 2018"
-__license__ = "The University of Manchester"
-__version__ = "2.2"
-__maintainer__ = "Mario Sandoval"
-__email__ = "mario.sandovalolive@manchester.ac.uk"
-__status__ = "Development"
-
-from pygame.locals import *
+import datetime
 from modules.utils import *
 
 def LISUSP():
-    logging.basicConfig(filename=("LISUSP.txt"), level=logging.DEBUG, format='%(asctime)s: %(message)s')
+    currentDT = datetime.datetime.now()
+    record = currentDT.year + currentDT.month + currentDT.day
+    logging.basicConfig(filename=("LISUSP.txt"), level=logging.DEBUG, format='%(asctime)s, %(message)s')
+
     UDP_IP = "127.0.0.1" 
     UDP_PORT = 7755 
-    update_rate = 0.095 
+    update_rate = 0.095    
     
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)    
 
@@ -49,7 +42,7 @@ def LISUSP():
             if(roll!=0.0 or pitch != 0.0 or yaw != 0.0):                
                 packet = "addrotation " + str(round(roll,2)) + " " + str(round(pitch,2)) + " " + str(round(yaw,2)) + " " + str(10.0)
                 sock.sendto(packet, (UDP_IP, UDP_PORT))
-                logging.info(packet)
+                logging.info("addrotation, " + str(round(roll,2)) + ", " + str(round(pitch,2)) + ", " + str(round(yaw,2)) + ", " + str(10.0))
                 time.sleep(0.5)
 			
             while elapsed < update_rate:

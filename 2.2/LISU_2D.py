@@ -11,7 +11,7 @@ __status__ = "Development"
 from pynput.mouse import Listener
 import logging
 
-logging.basicConfig(filename=("LISU2D.txt"), level=logging.DEBUG, format='%(asctime)s: %(message)s')
+logging.basicConfig(filename=("LISU2D.log"), level=logging.DEBUG, format='%(asctime)s: %(message)s')
 
 def on_move(x, y):
     logging.info("Mouse moved to ({0}, {1})".format(x, y))
@@ -24,8 +24,11 @@ def on_scroll(x, y, dx, dy):
     logging.info('Mouse scrolled at ({0}, {1})({2}, {3})'.format(x, y, dx, dy))
 
 def LISU2D():
-    with Listener(on_move=on_move, on_click=on_click, on_scroll=on_scroll) as listener:
+    with Listener(on_move=on_move, on_click=on_click) as listener:
         listener.join()
 
 if __name__ == "__main__":
-    LISU2D()    
+    try:
+        LISU2D()
+    except KeyboardInterrupt:
+        sys.exit()   
