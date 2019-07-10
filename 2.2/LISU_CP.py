@@ -62,6 +62,7 @@ def checkDevices():
   
 if __name__ == '__main__':
     try:
+        #LISU2D()
         checkDevices()
     except KeyboardInterrupt:
         sys.exit()
